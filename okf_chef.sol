@@ -2,6 +2,7 @@
 pragma solidity >=0.7.0;
 pragma experimental ABIEncoderV2;
 
+import "okfarm/library.sol";
 
 contract SushiToken is ERC20("OKFarm", "OKF1"), Ownable {
     using SafeMath for uint256;

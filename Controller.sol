@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity >=0.7.0;
 
+import "okfarm/library.sol";
 
 interface Strategy {
     function want() external view returns (address);
