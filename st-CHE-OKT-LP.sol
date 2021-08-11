@@ -4,6 +4,62 @@ pragma experimental ABIEncoderV2;
 
 import "okfarm/library.sol";
 
+interface IController {
+    function withdraw(address, uint256) external;
+    function balanceOf(address) external view returns (uint256);
+    function earn(address, uint256) external;
+    function want(address) external view returns (address);
+    function rewards() external view returns (address);
+    function vaults(address) external view returns (address);
+    function strategies(address) external view returns (address);
+}
+
+interface Uni {
+    function swapExactTokensForTokens(
+        uint256,
+        uint256,
+        address[] calldata,
+        address,
+        uint256
+    ) external;
+
+    function addLiquidity(
+        address tokenA,
+        address tokenB,
+        uint256 amountADesired,
+        uint256 amountBDesired,
+        uint256 amountAMin,
+        uint256 amountBMin,
+        address to,
+        uint256 deadline
+    ) external returns (uint256 amountA, uint256 amountB, uint256 liquidity);
+}
+
+interface UniPair {
+    function token0() external view returns (address);
+    function token1() external view returns (address);
+}
+
+struct UserInfo {
+    uint256 amount;
+    uint256 rewardDebt;
+}
+
+struct PoolInfo {
+    address lpToken;
+    uint256 allocPoint;
+    uint256 lastRewardBlock;
+    uint256 accRewardPerShare;
+}
+
+interface IPool {
+    function deposit(uint256 _pid, uint256 _amount) external;
+    function withdraw(uint256 _pid, uint256 _amount) external;
+    function emergencyWithdraw(uint256 _pid) external;
+    function userInfo(uint pid, address user) external view returns (UserInfo memory);
+    function poolInfo(uint pid) external view returns (PoolInfo memory);
+}
+
 contract StrategyCherryLp {
     using SafeERC20 for IERC20;
     using Address for address;
